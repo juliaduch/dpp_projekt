@@ -2,3 +2,5 @@ pylint
 pytest
 pytest-cov
 coverage
+networkx
+matplotlib
