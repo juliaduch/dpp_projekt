@@ -26,3 +26,26 @@ def dijkstra(graph, start, end):
 
     path.reverse()
     return path, distances[end]
+
+def round_trip_path(graph, start, waypoints):
+    full_path = []
+    total_cost = 0
+
+    current_start = start
+    for waypoint in waypoints:
+        if waypoint not in graph:
+            raise ValueError(f"Wierzchołek {waypoint} nie istnieje w grafie.")
+
+        path, cost = dijkstra(graph, current_start, waypoint)
+        if full_path:
+            full_path.extend(path[1:])
+        else:
+            full_path.extend(path)
+        total_cost += cost
+        current_start = waypoint
+
+    path, cost = dijkstra(graph, current_start, start)
+    full_path.extend(path[1:])
+    total_cost += cost
+
+    return full_path, total_cost
