@@ -1,5 +1,5 @@
 import unittest
-from functions import dijkstra
+from functions import dijkstra, round_trip_path
 
 class TestGraphUtils(unittest.TestCase):
 
@@ -35,6 +35,19 @@ class TestGraphUtils(unittest.TestCase):
         path, distance = dijkstra(single_node_graph, 'A', 'A')
         self.assertEqual(path, ['A'])
         self.assertEqual(distance, 0)
+
+    # test round_trip_path
+
+    def test_round_trip_path(self):
+        waypoints = ['B', 'C']
+        path, cost = round_trip_path(self.graph, 'A', waypoints)
+        self.assertEqual(path, ['A', 'B', 'C', 'B', 'A'])
+        self.assertEqual(cost, 6)
+
+    def test_round_trip_with_invalid_waypoint(self):
+        with self.assertRaises(ValueError):
+            round_trip_path(self.graph, 'A', ['B', 'Z'])  # 'Z' does not exist
+
 
 if __name__ == "__main__":
     unittest.main()
