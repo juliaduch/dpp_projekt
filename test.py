@@ -1,5 +1,6 @@
 import unittest
-from functions import dijkstra, round_trip_path
+from functions import dijkstra, round_trip_path, check_node_connections
+
 
 class TestGraphUtils(unittest.TestCase):
 
@@ -47,6 +48,16 @@ class TestGraphUtils(unittest.TestCase):
     def test_round_trip_with_invalid_waypoint(self):
         with self.assertRaises(ValueError):
             round_trip_path(self.graph, 'A', ['B', 'Z'])  # 'Z' does not exist
+
+    # Test check_node_connections
+
+    def test_check_node_connections_existing(self):
+        # This should print the connections
+        check_node_connections(self.graph, 'A')
+
+    def test_check_node_connections_non_existing(self):
+        # This should notify that the node does not exist
+        check_node_connections(self.graph, 'Z')
 
 
 if __name__ == "__main__":

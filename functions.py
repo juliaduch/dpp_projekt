@@ -1,5 +1,6 @@
 import heapq
 
+
 def dijkstra(graph, start, end):
     priority_queue = []
     heapq.heappush(priority_queue, (0, start))
@@ -27,6 +28,7 @@ def dijkstra(graph, start, end):
     path.reverse()
     return path, distances[end]
 
+
 def round_trip_path(graph, start, waypoints):
     full_path = []
     total_cost = 0
@@ -49,3 +51,16 @@ def round_trip_path(graph, start, waypoints):
     total_cost += cost
 
     return full_path, total_cost
+
+
+def check_node_connections(graph, node):
+    if node not in graph:
+        print(f"Wierzchołek {node} nie istnieje w grafie.")
+        return
+    connections = graph[node]
+    if not connections:
+        print(f"Wierzchołek {node} nie ma żadnych połączeń.")
+    else:
+        print(f"Połączenia dla wierzchołka {node}:")
+        for neighbor, weight in connections:
+            print(f" - {neighbor} (waga: {weight})")
