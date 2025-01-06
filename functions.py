@@ -4,6 +4,21 @@ import matplotlib.pyplot as plt
 
 
 def dijkstra(graph, start, end):
+    """
+    Implements Dijkstra's algorithm to find the shortest path 
+    between two nodes in a graph.
+
+    Args:
+        graph (dict): The graph represented as a dictionary where keys 
+                      are nodes and values are lists of tuples 
+                      (neighbor, weight).
+        start (str): The starting node.
+        end (str): The target node.
+
+    Returns:
+        tuple: A pair consisting of a list of nodes representing the shortest 
+               path and the total cost of this path.
+    """
     priority_queue = []
     heapq.heappush(priority_queue, (0, start))
     distances = {node: float('inf') for node in graph}
@@ -32,13 +47,25 @@ def dijkstra(graph, start, end):
 
 
 def round_trip_path(graph, start, waypoints):
+    """
+    Finds a round-trip path through specified waypoints, 
+    returning to the starting node.
+
+    Args:
+        graph (dict): The graph represented as a dictionary.
+        start (str): The starting node.
+        waypoints (list): List of intermediate nodes to visit.
+
+    Returns:
+        tuple: A pair containing the full path (list of nodes) and total cost.
+    """
     full_path = []
     total_cost = 0
 
     current_start = start
     for waypoint in waypoints:
         if waypoint not in graph:
-            raise ValueError(f"Wierzchołek {waypoint} nie istnieje w grafie.")
+            raise ValueError(f"Node {waypoint} does not exist in the graph.")
 
         path, cost = dijkstra(graph, current_start, waypoint)
         if full_path:
@@ -56,24 +83,46 @@ def round_trip_path(graph, start, waypoints):
 
 
 def check_node_connections(graph, node):
+    """
+    Checks the outgoing connections from a given node in the graph.
+
+    Args:
+        graph (dict): The graph represented as a dictionary.
+        node (str): The node for which connections will be checked.
+
+    Returns:
+        None
+    """
     if node not in graph:
-        print(f"Wierzchołek {node} nie istnieje w grafie.")
+        print(f"Node {node} does not exist in the graph.")
         return
     connections = graph[node]
     if not connections:
-        print(f"Wierzchołek {node} nie ma żadnych połączeń.")
+        print(f"Node {node} has no outgoing connections.")
     else:
-        print(f"Połączenia dla wierzchołka {node}:")
+        print(f"Connections for node {node}:")
         for neighbor, weight in connections:
-            print(f" - {neighbor} (waga: {weight})")
+            print(f" - {neighbor} (weight: {weight})")
 
 
 def visualize_graph(start_node, static_graph, waypoints):
+    """
+    Visualizes the graph with the round-trip path highlighted.
+
+    Args:
+        start_node (str): The starting node.
+        static_graph (dict): The graph represented as a dictionary.
+        waypoints (list): List of intermediate nodes to visit.
+
+    Returns:
+        None
+    """
     if start_node in static_graph and all(wp in static_graph for wp in waypoints):
         try:
             path, cost = round_trip_path(static_graph, start_node, waypoints)
             print(
-                f"Najkrótsza trasa z {start_node}, przez {waypoints}, z powrotem do {start_node}: {path} o koszcie {cost}")
+                f"The shortest round-trip path from {start_node}, through {waypoints}, "
+                f"back to {start_node}: {path} with a total cost of {cost}")
 
             G = nx.Graph()
 
@@ -106,9 +155,9 @@ def visualize_graph(start_node, static_graph, waypoints):
             nx.draw_networkx_edges(
                 G, pos, edgelist=path_edges, edge_color='red', width=2)
 
-            plt.title("Graf z zaznaczoną trasą powrotną")
+            plt.title("Graph with Highlighted Round-Trip Path")
             plt.show()
         except ValueError as e:
             print(e)
         else:
-            print("Podano nieprawidłowe wierzchołki.")
+            print("Invalid nodes provided.")
