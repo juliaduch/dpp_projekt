@@ -1,4 +1,4 @@
-DPP Project
+# DPP Project
 
 Authors: Przemysław Ćwięk, Julia Duch, Hubert Głąb, Magda Jaźwińska
 
@@ -44,13 +44,13 @@ Example:
 
 from functions import visualize_graph, calculate_shortest_path
 
-# Your graph as an adjacency list or matrix
+Your graph as an adjacency list or matrix
 graph = {...}
 
-# Visualize the graph
+Visualize the graph
 visualize_graph(graph)
 
-# Calculate shortest path
+Calculate shortest path
 shortest_path = calculate_shortest_path(graph, start_node, end_node)
 print(shortest_path)
 
