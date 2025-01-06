@@ -1,0 +1,16 @@
+
+site_name: DPP Projekt Documentation
+nav:
+  - Home: index.md
+  - Code:
+      - Functions: functions.md
+      - Tests: tests.md
+theme:
+  name: material
+
+plugins:
+  - search
+
+markdown_extensions:
+  - codehilite
+  - toc
